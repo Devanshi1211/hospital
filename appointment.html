@@ -106,7 +106,7 @@
   <label>Appointment Date</label>
   <input type="date" id="date" required>
 
-  <button type="submit">Submit</button>
+  <button type="submit">Proceed to Payment</button>
 </form>
 
 <script>
@@ -123,9 +123,10 @@
     const date = document.getElementById("date").value;
 
     window.location.href =
-      `receipt.html?hospital=${hospital}&name=${name}&email=${email}&date=${date}`;
+      `payment_type.html?hospital=${hospital}&name=${name}&email=${email}&date=${date}`;
   });
 </script>
 
 </body>
 </html>
+
