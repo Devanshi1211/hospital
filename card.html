@@ -15,6 +15,12 @@
     color: white;
   }
 
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  }
+
   .card-box {
     background: white;
     width: 360px;
@@ -22,14 +28,15 @@
     margin: auto;
     border-radius: 20px;
     color: #0a3d62;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    animation: fadeIn 0.7s ease;
   }
 
   input {
     width: 100%;
     padding: 12px;
     margin-top: 12px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid #ccc;
     font-size: 16px;
   }
@@ -37,7 +44,7 @@
   button {
     margin-top: 20px;
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background: #1e56a0;
     border: none;
     border-radius: 12px;
@@ -45,10 +52,18 @@
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
   }
 
   button:hover {
     background: #0a3d62;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 </head>
@@ -58,13 +73,36 @@
 <h1>💳 Card Payment</h1>
 
 <div class="card-box">
-  <input type="text" placeholder="Card Holder Name">
-  <input type="text" placeholder="Card Number">
-  <input type="text" placeholder="Expiry (MM/YY)">
-  <input type="text" placeholder="CVV">
+  <input type="text" id="cardName" placeholder="Card Holder Name">
+  <input type="text" id="cardNumber" placeholder="Card Number">
+  <input type="text" id="expiry" placeholder="Expiry (MM/YY)">
+  <input type="text" id="cvv" placeholder="CVV">
 
-  <button onclick="alert('Payment Completed!')">Pay Now</button>
+  <button onclick="completePayment()">Pay Now</button>
 </div>
+
+<script>
+  // Get previous page data from query params
+  const params = new URLSearchParams(window.location.search);
+  const hospital = params.get("hospital") || "Hospital";
+  const name = params.get("name") || "Patient";
+  const email = params.get("email") || "example@mail.com";
+  const date = params.get("date") || "2025-01-01";
+
+  function completePayment() {
+    // You could add simple validation here if needed
+    const cardName = document.getElementById("cardName").value;
+    const cardNumber = document.getElementById("cardNumber").value;
+
+    if(!cardName || !cardNumber) {
+      alert("Please fill in required fields!");
+      return;
+    }
+
+    // Redirect to receipt page with all details and payment method = Card
+    window.location.href = `receipt.html?hospital=${encodeURIComponent(hospital)}&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&date=${encodeURIComponent(date)}&method=Card`;
+  }
+</script>
 
 </body>
 </html>
