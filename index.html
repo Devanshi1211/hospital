@@ -14,7 +14,7 @@
 
   /* Header */
   header {
-    background: #0D47A1; /* royal blue */
+    background: #0D47A1;
     color: white;
     padding: 18px 40px;
     display: flex;
@@ -114,7 +114,6 @@
     margin-top: 30px;
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .services {
       grid-template-columns: 1fr;
@@ -127,22 +126,22 @@
 
 <header>
   <h2>💙 RoyalCare Hospital</h2>
-  <nav>
+
+  <!-- NAVIGATION -->
+  <nav id="navMenu">
     <a href="#">Home</a>
     <a href="doctors.html">Doctors</a>
     <a href="cat.html">Departments</a>
     <a href="state.html">Book Appointment</a>
     <a href="contact.html">Contact</a>
-
-    <!-- 👉 Added Login Button -->
-    <a href="Login.html" class="login-btn">Login</a>
+    <a href="Login.html" class="login-btn" id="loginButton">Login</a>
   </nav>
+
   <!-- USER INFO AFTER LOGIN -->
   <div id="userArea" style="display:none; align-items:center; gap:12px;">
     <img id="userIcon" src="" width="32" style="border-radius:50%;">
     <span id="userName" style="font-weight:600;"></span>
   </div>
-
 </header>
 
 <div class="hero">
@@ -171,21 +170,26 @@
 <footer>
   © 2025 RoyalCare Hospital | Professional. Trusted. Caring.
 </footer>
+
 <script>
 window.onload = () => {
   let logged = localStorage.getItem("isLoggedIn");
   let user = JSON.parse(localStorage.getItem("user"));
 
-  const loginBtn = document.querySelector(".login-btn");
+  const loginBtn = document.getElementById("loginButton");
   const userArea = document.getElementById("userArea");
 
+  // ❗ FIX: Check if loginBtn exists (otherwise error)
   if (logged === "true" && user) {
-    loginBtn.style.display = "none";        // Login button hide
-    userArea.style.display = "flex";        // User icon show
+
+    if (loginBtn) {
+      loginBtn.style.display = "none";  
+    }
+
+    userArea.style.display = "flex";
 
     document.getElementById("userName").innerText = user.name;
 
-    // 👉 ICON यहीं से change होगा
     document.getElementById("userIcon").src =
       "https://cdn-icons-png.flaticon.com/512/9131/9131529.png";
   }
@@ -194,6 +198,7 @@ window.onload = () => {
 
 </body>
 </html>
+
 
 
 
