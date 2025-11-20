@@ -68,16 +68,12 @@
 <h1>💳 Select Payment Method</h1>
 
 <div class="payment-box">
-  <button onclick="pay('UPI')">💸 Pay with UPI</button>
-  <button onclick="pay('Card')">💳 Pay with Card</button>
-  <button onclick="pay('Cash')">💵 Pay with Cash</button>
+  <!-- Direct links instead of JS function -->
+  <button onclick="window.location.href='upi.html'">💸 Pay with UPI</button>
+  <button onclick="window.location.href='card.html'">💳 Pay with Card</button>
+  <button onclick="window.location.href='receipt.html'">💵 Pay with Cash</button>
 </div>
-
-<script>
-  function pay(method) {
-    window.location.href = `payment_type.html?method=${method}`;
-  }
-</script>
 
 </body>
 </html>
+
