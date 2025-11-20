@@ -82,10 +82,24 @@
   <p><b>UPI ID:</b> test@upi</p>
   <p><b>Name:</b> Hospital Payment</p>
 
-  <button class="pay-btn" onclick="alert('Payment Successful!')">
+  <button class="pay-btn" onclick="completePayment()">
     ✔ I Have Completed the Payment
   </button>
 </div>
+
+<script>
+  // Get query params from previous page (hospital, name, email, date)
+  const params = new URLSearchParams(window.location.search);
+  const hospital = params.get("hospital") || "Hospital";
+  const name = params.get("name") || "Patient";
+  const email = params.get("email") || "example@mail.com";
+  const date = params.get("date") || "2025-01-01";
+
+  function completePayment() {
+    // Redirect to receipt page with all info and payment method
+    window.location.href = `receipt.html?hospital=${encodeURIComponent(hospital)}&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&date=${encodeURIComponent(date)}&method=UPI`;
+  }
+</script>
 
 </body>
 </html>
