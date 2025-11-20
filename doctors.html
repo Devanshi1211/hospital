@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Specialist Doctors — PremiumCare</title>
+<style>
+  :root{
+    --dark-1:#0D47A1;
+    --dark-2:#0a3d62;
+    --accent:#1e5799;
+    --card-bg: rgba(255,255,255,0.94);
+    --muted:#6b7280;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Poppins",sans-serif;
+    background: linear-gradient(135deg, var(--dark-1), var(--dark-2), var(--accent));
+    min-height:100vh;
+    color:#fff;
+    padding:36px 18px;
+  }
+
+  header{
+    max-width:1200px;
+    margin:0 auto 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  header h1{
+    margin:0;
+    font-size:22px;
+    letter-spacing:0.2px;
+    font-weight:700;
+    color:#fff;
+  }
+  .controls{
+    max-width:1200px;
+    margin:0 auto 22px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+
+  .search {
+    flex:1 1 360px;
+    display:flex;
+    gap:8px;
+  }
+  .search input{
+    flex:1;
+    padding:12px 14px;
+    border-radius:10px;
+    border:none;
+    font-size:14px;
+    outline:none;
+  }
+  .select {
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    font-size:14px;
+    background:#fff;
+    color:#0a3d62;
+  }
+
+  .list {
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    color:#0b2b4a;
+    padding:18px;
+    border-radius:16px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .card:hover{
+    transform: translateY(-6px);
+    box-shadow:0 20px 42px rgba(0,0,0,0.32);
+  }
+
+  .doc-top{display:flex;gap:12px;align-items:center}
+  .avatar{
+    width:64px;height:64px;border-radius:12px;
+    background:linear-gradient(135deg,#e9f0ff,#f8fbff);
+    display:flex;align-items:center;justify-content:center;color:var(--dark-2);
+    font-weight:700;font-size:20px;
+  }
+  .doc-info{flex:1}
+  .doc-name{font-size:18px;font-weight:700;color:#0a3d62;margin:0}
+  .doc-meta{font-size:13px;color:var(--muted);margin-top:6px}
+
+  .tags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .tag{
+    font-size:12px;padding:6px 8px;border-radius:10px;background:#eef6ff;color:#0a3d62;font-weight:600;
+  }
+
+  .card-bottom{display:flex;gap:12px;margin-top:14px;align-items:center;justify-content:space-between}
+  .time{font-size:13px;color:var(--muted)}
+  .book-btn{
+    background: linear-gradient(135deg,var(--dark-2),var(--accent));
+    color:white;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700;
+  }
+
+  .empty{
+    max-width:1200px;margin:30px auto;color:#fff;text-align:center;font-size:16px;
+  }
+
+  /* responsive small */
+  @media (max-width:600px){
+    .search input{font-size:13px;padding:10px}
+    .select{padding:10px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Specialist Doctors — PremiumCare Hospital Network</h1>
+  <div style="color:#e6eefc;font-size:13px">Find a specialist & book appointment</div>
+</header>
+
+<div class="controls">
+  <div class="search">
+    <input id="q" placeholder="Search doctor, specialty or hospital (e.g. cardiologist, Sterling)"/>
+    <select id="hospitalFilter" class="select"><option value="">All Hospitals</option></select>
+    <select id="specialtyFilter" class="select"><option value="">All Specialties</option></select>
+  </div>
+</div>
+
+<div id="list" class="list"></div>
+<div id="noRes" class="empty" style="display:none">No doctors found for your search.</div>
+
+<script>
+/* Sample specialist data — add or edit as needed */
+const doctors = [
+  { name:"Dr. Simmardeep Gill", hospital:"Sterling Hospital Vadodara", specialty:"Cardiology", time:"09:00 - 17:00", contact:"0265-123456" },
+  { name:"Dr. Kushan Nanavati", hospital:"VINS Hospital Vadodara", specialty:"Vascular Surgery", time:"10:00 - 16:00", contact:"0265-234567" },
+  { name:"Dr. Ranjan Aiyer", hospital:"SSG Hospital Vadodara", specialty:"Oncology", time:"11:00 - 15:00", contact:"0265-345678" },
+  { name:"Dr. P. Patel", hospital:"Padmashree Multispeciality Hospital", specialty:"Orthopedics", time:"09:00 - 18:00", contact:"0265-456789" },
+  { name:"Dr. A. Desai", hospital:"Baroda Heart Institute", specialty:"Cardiology", time:"08:00 - 16:00", contact:"0265-567890" },
+  { name:"Dr. B. Mehta", hospital:"Shree Krishna Hospital", specialty:"General Surgery", time:"10:00 - 19:00", contact:"0265-678901" },
+  { name:"Dr. S. Bhatia", hospital:"Balaji Netralaya", specialty:"Ophthalmology", time:"09:00 - 14:00", contact:"0265-789012" },
+
+  /* Surat */
+  { name:"Dr. Prakash Shah", hospital:"Kiran Hospital Surat", specialty:"Cardiology", time:"09:00 - 16:00", contact:"0261-123456" },
+  { name:"Dr. K. Doshi", hospital:"ICI Hospital Surat", specialty:"Nephrology", time:"09:30 - 15:30", contact:"0261-234567" },
+  { name:"Dr. H. Patel", hospital:"GHS Hospital Surat", specialty:"Pulmonology", time:"10:00 - 17:00", contact:"0261-345678" },
+  { name:"Dr. R. Nagar", hospital:"Smile Hospital Surat", specialty:"ENT", time:"11:00 - 18:00", contact:"0261-456789" },
+
+  /* Mumbai */
+  { name:"Dr. A. Kumar", hospital:"KEM Hospital Mumbai", specialty:"Neurology", time:"09:00 - 17:00", contact:"022-123456" },
+  { name:"Dr. S. Gupta", hospital:"Bombay Hospital & Medical Research Centre", specialty:"Cardiology", time:"10:00 - 18:00", contact:"022-234567" },
+  { name:"Dr. R. K. Gupta", hospital:"AIIMS Delhi", specialty:"Endocrinology", time:"10:00 - 16:00", contact:"011-123456" },
+
+  /* Delhi */
+  { name:"Dr. S. Sharma", hospital:"Safdarjung Hospital", specialty:"General Medicine", time:"09:00 - 17:00", contact:"011-234567" },
+  { name:"Dr. K. Kapoor", hospital:"Fortis Escorts Heart Institute", specialty:"Interventional Cardiology", time:"09:30 - 15:30", contact:"011-345678" },
+  { name:"Dr. M. Batra", hospital:"Max Super Speciality Hospital Saket", specialty:"Gastroenterology", time:"10:00 - 18:00", contact:"011-456789" },
+
+  /* Pune */
+  { name:"Dr. N. Shah", hospital:"Ruby Hall Clinic Pune", specialty:"Oncology", time:"09:00 - 16:00", contact:"020-123456" },
+  { name:"Dr. V. Kulkarni", hospital:"Jehangir Hospital Pune", specialty:"Dermatology", time:"11:00 - 19:00", contact:"020-234567" },
+
+  /* Bengaluru */
+  { name:"Dr. R. Menon", hospital:"Apollo Hospital Bengaluru", specialty:"Cardiothoracic Surgery", time:"09:00 - 17:00", contact:"080-123456" },
+  { name:"Dr. S. Rao", hospital:"Manipal Hospital Bengaluru", specialty:"Nephrology", time:"10:00 - 16:00", contact:"080-234567" }
+];
+
+/* Render utilities */
+const listEl = document.getElementById('list');
+const hospFilter = document.getElementById('hospitalFilter');
+const specFilter = document.getElementById('specialtyFilter');
+const qInput = document.getElementById('q');
+const noRes = document.getElementById('noRes');
+
+function uniqueValues(arr, key){
+  return Array.from(new Set(arr.map(x => x[key]))).sort();
+}
+
+function populateFilters(){
+  // hospitals
+  const hospitals = uniqueValues(doctors,'hospital');
+  hospitals.forEach(h => {
+    const opt = document.createElement('option'); opt.value = h; opt.textContent = h;
+    hospFilter.appendChild(opt);
+  });
+
+  // specialties
+  const specs = uniqueValues(doctors,'specialty');
+  specs.forEach(s => {
+    const opt = document.createElement('option'); opt.value = s; opt.textContent = s;
+    specFilter.appendChild(opt);
+  });
+}
+
+function render(list){
+  listEl.innerHTML = '';
+  if(!list.length){ noRes.style.display='block'; return; } else { noRes.style.display='none' }
+  list.forEach(d => {
+    const card = document.createElement('div'); card.className='card';
+    card.innerHTML = `
+      <div class="doc-top">
+        <div class="avatar">${initials(d.name)}</div>
+        <div class="doc-info">
+          <div class="doc-name">${escapeHtml(d.name)}</div>
+          <div class="doc-meta">${escapeHtml(d.hospital)}</div>
+        </div>
+      </div>
+
+      <div class="tags">
+        <div class="tag">${escapeHtml(d.specialty)}</div>
+        <div class="tag">Contact: ${escapeHtml(d.contact)}</div>
+      </div>
+
+      <div class="card-bottom">
+        <div>
+          <div class="time"><strong>Timing:</strong> ${escapeHtml(d.time)}</div>
+        </div>
+        <div>
+          <button class="book-btn" onclick="book('${encodeURIComponent(d.hospital)}','${encodeURIComponent(d.name)}')">Book</button>
+        </div>
+      </div>
+    `;
+    listEl.appendChild(card);
+  });
+}
+
+/* helpers */
+function initials(name){
+  return name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+}
+function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+/* filtering */
+function applyFilters(){
+  const q = qInput.value.trim().toLowerCase();
+  const h = hospFilter.value;
+  const s = specFilter.value;
+
+  const filtered = doctors.filter(d => {
+    if(h && d.hospital !== h) return false;
+    if(s && d.specialty !== s) return false;
+    if(q){
+      const hay = (d.name + ' ' + d.hospital + ' ' + d.specialty).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  render(filtered);
+}
+
+/* booking redirect */
+function book(hospitalEncoded, doctorEncoded){
+  const hosp = decodeURIComponent(hospitalEncoded);
+  const doc = decodeURIComponent(doctorEncoded);
+  // open appointment page with hospital + doctor
+  window.location.href = `appointment.html?hospital=${encodeURIComponent(hosp)}&doctor=${encodeURIComponent(doc)}`;
+}
+
+/* init */
+populateFilters();
+render(doctors);
+
+/* events */
+hospFilter.addEventListener('change', applyFilters);
+specFilter.addEventListener('change', applyFilters);
+qInput.addEventListener('input', () => { setTimeout(applyFilters, 50); });
+
+</script>
+</body>
+</html>

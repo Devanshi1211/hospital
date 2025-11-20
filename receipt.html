@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Receipt</title>
+
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #0a3d62, #1e56a0, #82ccdd);
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+  }
+
+  .receipt {
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    width: 420px;
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+    color: #0a3d62;
+    animation: fadeUp 0.7s ease;
+  }
+
+  h2 {
+    color: #1e56a0;
+    margin-bottom: 15px;
+  }
+
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    background: #1e56a0;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #163b6a;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+</head>
+<body>
+
+<h1>Your Appointment Receipt</h1>
+
+<div class="receipt">
+  <h2>Appointment Confirmed</h2>
+  <p id="details"></p>
+  <p id="timing"></p>
+
+  <button onclick="downloadReceipt()">📄 Download Receipt</button>
+</div>
+
+<script>
+  // Get data
+  const params = new URLSearchParams(window.location.search);
+
+  const hospital = params.get("hospital");
+  const name = params.get("name");
+  const email = params.get("email");
+  const date = params.get("date");
+
+  // Default payment method = CASH
+  const method = "Cash";
+
+  // Random token number between 1 and 40
+  const token = Math.floor(Math.random() * 40) + 1;
+
+  // Each patient takes approx 5 minutes
+  const approxMinutes = (token - 1) * 5;
+
+  // Reminder time (10 min before)
+  const reminderTime = (approxMinutes - 10) * 60 * 1000;
+
+  document.getElementById("details").innerHTML = `
+    <strong>Hospital:</strong> ${hospital}<br>
+    <strong>Name:</strong> ${name}<br>
+    <strong>Email:</strong> ${email}<br>
+    <strong>Date:</strong> ${date}<br>
+    <strong>Payment Method:</strong> ${method}<br>
+  `;
+
+  document.getElementById("timing").innerHTML = `
+    <strong>Token Number:</strong> ${token}<br>
+    <strong>Approx Waiting Time:</strong> ${approxMinutes} minutes<br><br>
+    ⏳ You will receive a reminder 10 minutes before your turn.
+  `;
+
+  // Notifications
+  if ("Notification" in window) {
+    Notification.requestPermission();
+  }
+
+  if (reminderTime > 0 && "Notification" in window) {
+    setTimeout(() => {
+      new Notification("Your turn is coming!", {
+        body: `Hi ${name}, your token number ${token} will be called in 10 minutes.`,
+        icon: "https://cdn-icons-png.flaticon.com/512/2966/2966487.png"
+      });
+    }, reminderTime);
+  }
+
+  // DOWNLOAD RECEIPT FUNCTION
+  function downloadReceipt() {
+    const content = `
+      Appointment Receipt
+
+      Hospital: ${hospital}
+      Patient Name: ${name}
+      Email: ${email}
+      Date: ${date}
+      Payment Method: ${method}
+      Token Number: ${token}
+      Waiting Time: ${approxMinutes} minutes
+    `;
+
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Appointment_Receipt.txt";
+    link.click();
+  }
+</script>
+
+</body>
+</html>

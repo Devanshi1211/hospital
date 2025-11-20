@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select City</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+
+        /* 🔵 DARKER ROYAL BLUE THEME */
+        background: linear-gradient(135deg, #0D47A1, #0D47A1, #1e5799);
+        
+        min-height: 100vh;
+        padding: 50px 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 45px;
+        letter-spacing: 1px;
+        text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+        animation: fadeDown 0.7s ease;
+    }
+
+    @keyframes fadeDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 35px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    /* 🔷 Premium White Gloss Cards */
+    .state-box {
+        background: linear-gradient(145deg, #ffffff, #e6eeff);
+        border-radius: 20px;
+        padding: 25px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: #083358;
+        box-shadow: 0 12px 28px rgba(0,0,0,0.20);
+        cursor: pointer;
+        transition: all 0.35s ease;
+        border: 3px solid transparent;
+    }
+
+    .state-box:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+        border-color: #0a55b0;
+    }
+
+    .state-box {
+        animation: fadeUp 0.8s ease;
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🏥 Select Your City</h1>
+
+<div class="grid">
+    <div class="state-box" onclick="openCity('vadodara')">Vadodara</div>
+    <div class="state-box" onclick="openCity('surat')">Surat</div>
+    <div class="state-box" onclick="openCity('rajkot')">Rajkot</div>
+    <div class="state-box" onclick="openCity('ahmedabad')">Ahmedabad</div>
+    <div class="state-box" onclick="openCity('mumbai')">Mumbai</div>
+    <div class="state-box" onclick="openCity('delhi')">Delhi</div>
+    <div class="state-box" onclick="openCity('jaipur')">Jaipur</div>
+    <div class="state-box" onclick="openCity('bengaluru')">Bengaluru</div>
+    <div class="state-box" onclick="openCity('hyderabad')">Hyderabad</div>
+    <div class="state-box" onclick="openCity('pune')">Pune</div>
+    <div class="state-box" onclick="openCity('chennai')">Chennai</div>
+    <div class="state-box" onclick="openCity('kolkata')">Kolkata</div>
+</div>
+
+<script>
+function openCity(cityName) {
+    window.location.href = "hospital.html?city=" + cityName;
+}
+</script>
+
+</body>
+</html>

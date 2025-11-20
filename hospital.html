@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospitals Near You</title>
+<style>
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #0D47A1, #0D47A1, #1e5799);
+    font-family: "Poppins", sans-serif;
+    padding: 30px 20px;
+    min-height: 100vh;
+    color: #fff;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+
+  h3 {
+    text-align: center;
+    color: #e0e0e0;
+    margin-bottom: 30px;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 10px;
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.85);
+    color: #1a1a1a;
+    padding: 22px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    animation: fade 0.9s ease;
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+  }
+
+  .card h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #0a3d62;
+  }
+
+  .card p {
+    margin: 6px 0;
+    font-size: 14px;
+  }
+
+  .btn {
+    margin-top: 10px;
+    background: #0a3d62;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .btn:hover {
+    background: #1e5799;
+  }
+
+  @keyframes fade {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<h1>🏥 Available Hospitals</h1>
+<h3 id="cityName">Loading...</h3>
+
+<div class="container" id="hospitalList"></div>
+
+<script>
+  // Hospital data = sample with real hospitals + dummy time & type
+  const hospitalData = {
+    vadodara: [
+      { name: "Sterling Hospital Vadodara", type: "Private", doctor: "Dr. S. Gill", time: "08:00 - 20:00" },
+      { name: "VINS Hospital Vadodara", type: "Private", doctor: "Dr. K. Nanavati", time: "09:00 - 18:00" },
+      { name: "SSG Hospital Vadodara", type: "Government", doctor: "Dr. R. Aiyer", time: "09:00 - 17:00" },
+      { name: "Padmashree Multispeciality Hospital", type: "Private", doctor: "Dr. P. Patel", time: "10:00 - 19:00" },
+      { name: "Metro Hospital Vadodara", type: "Private", doctor: "Dr. M. Shah", time: "09:00 - 21:00" },
+      { name: "Baroda Heart Institute", type: "Private", doctor: "Dr. A. Desai", time: "08:00 - 17:00" },
+      { name: "Shree Krishna Hospital", type: "Private", doctor: "Dr. B. Mehta", time: "09:00 - 18:00" },
+      { name: "Balaji Netralaya", type: "Private", doctor: "Dr. S. Bhatia", time: "09:00 - 16:00" },
+      { name: "Sir T. Hospital", type: "Government", doctor: "Dr. R. Joshi", time: "09:00 - 14:00" },
+      { name: "Cancer Care Center Vadodara", type: "Private", doctor: "Dr. N. Shah", time: "10:00 - 17:00" }
+    ],
+    surat: [
+      { name: "Kiran Hospital Surat", type: "Private", doctor: "Dr. P. Shah", time: "09:00 - 17:00" },
+      { name: "ICI Hospital Surat", type: "Private", doctor: "Dr. K. Doshi", time: "08:00 - 18:00" },
+      { name: "GHS Hospital Surat", type: "Government", doctor: "Dr. H. Patel", time: "09:00 - 16:00" },
+      { name: "Smile Hospital Surat", type: "Private", doctor: "Dr. R. Nagar", time: "10:00 - 20:00" },
+      { name: "Crystal Hospital Surat", type: "Private", doctor: "Dr. S. Mehta", time: "09:00 - 19:00" },
+      { name: "Sarthi Hospital Surat", type: "Private", doctor: "Dr. A. Vora", time: "08:00 - 18:00" },
+      { name: "Shree Hospital Surat", type: "Private", doctor: "Dr. M. Shah", time: "09:00 - 17:00" },
+      { name: "New Civil Hospital Surat", type: "Government", doctor: "Dr. M. Desai", time: "09:00 - 15:00" },
+      { name: "J J Hospital Surat", type: "Government", doctor: "Dr. N. Mehta", time: "09:00 - 14:00" },
+      { name: "Swastik Hospital Surat", type: "Private", doctor: "Dr. V. Singh", time: "10:00 - 20:00" }
+    ],
+    mumbai: [
+      { name: "Bombay Hospital & Medical Research Centre", type: "Private", doctor: "Dr. X", time: "24 Hours" },
+      { name: "Jaslok Hospital & Research Centre", type: "Private", doctor: "Dr. Y", time: "24 Hours" },
+      { name: "St. George Hospital Mumbai", type: "Government", doctor: "Dr. Z", time: "09:00 - 17:00" },
+      { name: "KEM Hospital Mumbai", type: "Government", doctor: "Dr. A", time: "24 Hours" },
+      { name: "Bhabha Hospital Mumbai", type: "Government", doctor: "Dr. B", time: "08:00 - 20:00" },
+      { name: "Wockhardt Hospital Mumbai", type: "Private", doctor: "Dr. C", time: "09:00 - 19:00" },
+      { name: "Lilavati Hospital Mumbai", type: "Private", doctor: "Dr. D", time: "24 Hours" },
+      { name: "Saifee Hospital Mumbai", type: "Private", doctor: "Dr. E", time: "24 Hours" },
+      { name: "Holy Family Hospital Mumbai", type: "Private", doctor: "Dr. F", time: "24 Hours" },
+      { name: "Nair Hospital Mumbai", type: "Government", doctor: "Dr. G", time: "24 Hours" }
+    ],
+    delhi: [
+      { name: "AIIMS Delhi", type: "Government", doctor: "Dr. R. K. Gupta", time: "24 Hours" },
+      { name: "Safdarjung Hospital", type: "Government", doctor: "Dr. S. Sharma", time: "24 Hours" },
+      { name: "Ram Manohar Lohia Hospital", type: "Government", doctor: "Dr. P. Singh", time: "24 Hours" },
+      { name: "Sanjeevan Hospital", type: "Private", doctor: "Dr. Prem Aggarwal", time: "24 Hours" },
+      { name: "Fortis Escorts Heart Institute", type: "Private", doctor: "Dr. K. Kapoor", time: "09:00 - 18:00" },
+      { name: "Apollo Hospital Delhi", type: "Private", doctor: "Dr. L. Mehta", time: "24 Hours" },
+      { name: "Max Super Speciality Hospital Saket", type: "Private", doctor: "Dr. M. Batra", time: "24 Hours" },
+      { name: "BLK Super Speciality Hospital", type: "Private", doctor: "Dr. N. Khandelwal", time: "24 Hours" },
+      { name: "Mohalla Clinic Delhi", type: "Government", doctor: "Dr. A. Kumar", time: "09:00 - 15:00" },
+      { name: "Holy Family Hospital Delhi", type: "Private", doctor: "Dr. R. Gupta", time: "24 Hours" }
+    ]
+  };
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const city = urlParams.get("city");
+  document.getElementById("cityName").textContent = city 
+    ? city.charAt(0).toUpperCase() + city.slice(1) + " — Hospitals" 
+    : "City Not Selected";
+
+  const listDiv = document.getElementById("hospitalList");
+  listDiv.innerHTML = "";
+
+  if (city && hospitalData[city]) {
+    hospitalData[city].forEach(h => {
+      const card = `
+        <div class="card">
+          <h2>${h.name}</h2>
+          <p><b>Type:</b> ${h.type}</p>
+          <p><b>Doctor:</b> ${h.doctor}</p>
+          <p><b>Timing:</b> ${h.time}</p>
+          <button class="btn" onclick="book('${h.name}')">
+            Book Appointment
+          </button>
+        </div>
+      `;
+      listDiv.innerHTML += card;
+    });
+  } else {
+    listDiv.innerHTML = `<p style='color: #fff; font-size:20px; text-align:center;'>No hospitals available for this city.</p>`;
+  }
+
+  function book(hosp) {
+    // Redirect to appointment page with hospital param
+    window.location.href = "appointment.html?hospital=" + encodeURIComponent(hosp);
+  }
+
+</script>
+
+</body>
+</html>

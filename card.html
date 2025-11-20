@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Payment</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #0a3d62, #1e56a0, #3c6382);
+    text-align: center;
+    padding: 40px 20px;
+    color: white;
+  }
+
+  .card-box {
+    background: white;
+    width: 360px;
+    padding: 25px;
+    margin: auto;
+    border-radius: 20px;
+    color: #0a3d62;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #1e56a0;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #0a3d62;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>💳 Card Payment</h1>
+
+<div class="card-box">
+  <input type="text" placeholder="Card Holder Name">
+  <input type="text" placeholder="Card Number">
+  <input type="text" placeholder="Expiry (MM/YY)">
+  <input type="text" placeholder="CVV">
+
+  <button onclick="alert('Payment Completed!')">Pay Now</button>
+</div>
+
+</body>
+</html>

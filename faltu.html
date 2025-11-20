@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Hospital</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg,#6A5ACD,#FFFFFF);
+    font-family: "Poppins", sans-serif;
+}
+.container {
+    background: white;
+    padding: 25px;
+    max-width: 450px;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+}
+select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #777;
+    font-size: 16px;
+}
+button {
+    background: #6A5ACD;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover {
+    background: #5848c2;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Select Hospital</h2>
+
+    <!-- STATE -->
+    <label>State</label>
+    <select id="stateSelect" onchange="loadCities()">
+        <option value="">-- Select State --</option>
+    </select>
+
+    <!-- CITY -->
+    <label>City</label>
+    <select id="citySelect" onchange="loadHospitalTypes()">
+        <option value="">-- Select City --</option>
+    </select>
+
+    <!-- TYPE -->
+    <label>Hospital Type</label>
+    <select id="typeSelect" onchange="loadHospitals()">
+        <option value="">-- Select Type --</option>
+        <option value="government">Government</option>
+        <option value="private">Private</option>
+    </select>
+
+    <!-- HOSPITAL -->
+    <label>Hospital</label>
+    <select id="hospitalSelect">
+        <option value="">-- Select Hospital --</option>
+    </select>
+
+</div>
+
+<script>
+// Master Data
+const hospitalsData = {
+    "Gujarat": {
+        "Ahmedabad": {
+            government: ["Civil Hospital", "SVP Hospital"],
+            private: ["Sterling Hospital", "Zydus Hospital"]
+        },
+        "Surat": {
+            government: ["New Civil Hospital", "SMIMER"],
+            private: ["Sunshine Hospital", "Mahavir Hospital"]
+        }
+    },
+    "Maharashtra": {
+        "Mumbai": {
+            government: ["KEM Hospital", "JJ Hospital"],
+            private: ["Lilavati Hospital", "Hinduja Hospital"]
+        },
+        "Pune": {
+            government: ["Sassoon Hospital"],
+            private: ["Ruby Hall Clinic", "Jehangir Hospital"]
+        }
+    }
+};
+
+// Load States
+window.onload = function() {
+    let stateSelect = document.getElementById("stateSelect");
+
+    Object.keys(hospitalsData).forEach(state => {
+        let option = document.createElement("option");
+        option.value = state;
+        option.textContent = state;
+        stateSelect.appendChild(option);
+    });
+};
+
+// Load Cities Based on State
+function loadCities() {
+    let state = document.getElementById("stateSelect").value;
+    let citySelect = document.getElementById("citySelect");
+    citySelect.innerHTML = "<option>-- Select City --</option>";
+
+    if (!state) return;
+
+    Object.keys(hospitalsData[state]).forEach(city => {
+        let option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+    });
+}
+
+// Load hospital type dropdown (no changes required)
+function loadHospitalTypes() {
+    document.getElementById("hospitalSelect").innerHTML = "<option>-- Select Hospital --</option>";
+}
+
+// Load Hospitals Based on City + Type
+function loadHospitals() {
+    let state = document.getElementById("stateSelect").value;
+    let city = document.getElementById("citySelect").value;
+    let type = document.getElementById("typeSelect").value;
+    let hospitalSelect = document.getElementById("hospitalSelect");
+
+    hospitalSelect.innerHTML = "<option>-- Select Hospital --</option>";
+
+    if (state && city && type) {
+        let list = hospitalsData[state][city][type];
+
+        list.forEach(h => {
+            let option = document.createElement("option");
+            option.value = h;
+            option.textContent = h;
+            hospitalSelect.appendChild(option);
+        });
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctor Categories - Hospital Queue System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #6A5ACD 0%, #FFFFFF 100%);
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #6A5ACD;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 20px;
+    }
+
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      text-align: center;
+      transition: 0.3s;
+      font-weight: 600;
+      color: #2E2E2E;
+      cursor: pointer;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+      background: #F3E8FF;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Select Doctor Category</h1>
+
+  <div class="grid">
+    <div class="box">Gynecologist</div>
+    <div class="box">Dentist</div>
+    <div class="box">Orthopedic</div>
+    <div class="box">Cardiologist</div>
+    <div class="box">Dermatologist</div>
+    <div class="box">ENT Specialist</div>
+    <div class="box">Neurologist</div>
+    <div class="box">Pediatrician</div>
+    <div class="box">General Physician</div>
+    <div class="box">Urologist</div>
+    <div class="box">Psychiatrist</div>
+    <div class="box">Eye Specialist</div>
+  </div>
+</body>
+</html>

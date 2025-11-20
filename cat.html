@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Department</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0D47A1, #0D47A1, #3c6382);
+        min-height: 100vh;
+        padding: 40px 20px;
+        color: white;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 38px;
+        margin-bottom: 30px;
+        text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 25px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .box {
+        background: rgba(255,255,255,0.95);
+        color: #0a3d62;
+        padding: 20px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .box:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+        background: white;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🏥 Select Medical Department</h1>
+
+<div class="grid">
+    <div class="box" onclick="go()">Cardiology (Heart)</div>
+    <div class="box" onclick="go()">Neurology (Brain & Nerves)</div>
+    <div class="box" onclick="go()">Orthopedics (Bones)</div>
+    <div class="box" onclick="go()">Dermatology (Skin)</div>
+    <div class="box" onclick="go()">Gynecology (Women Health)</div>
+    <div class="box" onclick="go()">Pediatrics (Children)</div>
+    <div class="box" onclick="go()">ENT (Ear, Nose, Throat)</div>
+    <div class="box" onclick="go()">Ophthalmology (Eyes)</div>
+    <div class="box" onclick="go()">Oncology (Cancer)</div>
+    <div class="box" onclick="go()">Psychiatry (Mental Health)</div>
+    <div class="box" onclick="go()">Gastroenterology (Stomach)</div>
+    <div class="box" onclick="go()">Urology (Kidney)</div>
+    <div class="box" onclick="go()">Dentistry (Teeth)</div>
+</div>
+
+<script>
+function go() {
+    window.location.href = "state.html";
+}
+</script>
+
+</body>
+</html>

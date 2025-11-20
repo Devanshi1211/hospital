@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment</title>
+
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #0a3d62, #1e5fac, #3c82d9);
+    min-height: 100vh;
+    text-align: center;
+    color: white;
+  }
+
+  h1 {
+    font-size: 38px;
+    font-weight: 700;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    margin-bottom: 40px;
+  }
+
+  .payment-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 420px;
+    margin: auto;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    animation: fadeUp 0.8s ease;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    background: #1e5fac;
+    color: white;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  button:hover {
+    background: white;
+    color: #1e5fac;
+    border-color: #1e5fac;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+</head>
+<body>
+
+<h1>💳 Select Payment Method</h1>
+
+<div class="payment-box">
+  <button onclick="pay('UPI')">💸 Pay with UPI</button>
+  <button onclick="pay('Card')">💳 Pay with Card</button>
+  <button onclick="pay('Cash')">💵 Pay with Cash</button>
+</div>
+
+<script>
+  function pay(method) {
+    window.location.href = `payment_type.html?method=${method}`;
+  }
+</script>
+
+</body>
+</html>

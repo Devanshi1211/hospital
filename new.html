@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Blue Hospital Website</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #F5F5F5;
+  }
+
+  /* Header */
+  header {
+    background: #0D47A1; /* royal blue */
+    color: white;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
+  }
+
+  header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+  }
+
+  header a:hover {
+    opacity: 0.8;
+  }
+
+  /* Login Button */
+  .login-btn {
+    background: #FFFFFF;
+    color: #0D47A1;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    border: 2px solid white;
+  }
+
+  .login-btn:hover {
+    background: #BBDEFB;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(135deg, #1565C0, #0D47A1);
+    color: white;
+    padding: 70px 40px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 46px;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .hero p {
+    font-size: 19px;
+    opacity: 0.9;
+  }
+
+  .btn {
+    margin-top: 20px;
+    background: #FFFFFF;
+    padding: 12px 28px;
+    border-radius: 6px;
+    color: #0D47A1;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid white;
+  }
+
+  .btn:hover {
+    background: #BBDEFB;
+  }
+
+  /* Services Section */
+  .services {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+  .service-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 8px solid #1565C0;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .service-card h3 {
+    color: #0D47A1;
+    font-weight: 600;
+  }
+
+  /* Footer */
+  footer {
+    background: #0D47A1;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .services {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<header>
+  <h2>💙 RoyalCare Hospital</h2>
+  <nav>
+    <a href="#">Home</a>
+    <a href="doctors.html">Doctors</a>
+    <a href="cat.html">Departments</a>
+    <a href="state.html">Book Appointment</a>
+    <a href="contact.html">Contact</a>
+
+    <!-- 👉 Added Login Button -->
+    <a href="login.html" class="login-btn">Login</a>
+  </nav>
+  <!-- USER INFO AFTER LOGIN -->
+  <div id="userArea" style="display:none; align-items:center; gap:12px;">
+    <img id="userIcon" src="" width="32" style="border-radius:50%;">
+    <span id="userName" style="font-weight:600;"></span>
+  </div>
+
+</header>
+
+<div class="hero">
+  <h1>Premium Healthcare, Trusted by All</h1>
+  <p>Your health is our priority with world-class doctors and services.</p>
+  <a class="btn" href="state.html">Book Appointment</a>
+</div>
+
+<section class="services">
+  <div class="service-card">
+    <h3>👨‍⚕️ Specialist Doctors</h3>
+    <p>World-class specialists available at your service.</p>
+  </div>
+
+  <div class="service-card">
+    <h3>🧪 Advanced Diagnostics</h3>
+    <p>Cutting-edge lab systems for accurate testing.</p>
+  </div>
+
+  <div class="service-card">
+    <h3>🚑 Emergencies 24/7</h3>
+    <p>Quick response emergency team round the clock.</p>
+  </div>
+</section>
+
+<footer>
+  © 2025 RoyalCare Hospital | Professional. Trusted. Caring.
+</footer>
+<script>
+window.onload = () => {
+  let logged = localStorage.getItem("isLoggedIn");
+  let user = JSON.parse(localStorage.getItem("user"));
+
+  const loginBtn = document.querySelector(".login-btn");
+  const userArea = document.getElementById("userArea");
+
+  if (logged === "true" && user) {
+    loginBtn.style.display = "none";        // Login button hide
+    userArea.style.display = "flex";        // User icon show
+
+    document.getElementById("userName").innerText = user.name;
+
+    // 👉 ICON यहीं से change होगा
+    document.getElementById("userIcon").src =
+      "https://cdn-icons-png.flaticon.com/512/9131/9131529.png";
+  }
+};
+</script>
+
+</body>
+</html>
