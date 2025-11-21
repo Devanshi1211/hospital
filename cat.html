@@ -9,11 +9,30 @@
     body {
         margin: 0;
         font-family: "Poppins", sans-serif;
-        background: linear-gradient(135deg, #0D47A1, #0D47A1, #3c6382);
+
+        /* Gradient overlay + hospital image */
+        background-image: linear-gradient(rgba(13,71,161,0.6), rgba(60,99,130,0.6)), url('hospital_single.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         min-height: 100vh;
         padding: 40px 20px;
         color: white;
         text-align: center;
+
+        /* Smooth gradient animation */
+    }
+
+    @keyframes bgTransition {
+        0% {
+            background-image: linear-gradient(rgba(13,71,161,0.6), rgba(60,99,130,0.6)), url('hospital.jpg');
+        }
+        50% {
+            background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
+        }
+        100% {
+            background-image: linear-gradient(rgba(13,71,161,0.6), rgba(60,99,130,0.6)), url('hospital.jpg');
+        }
     }
 
     h1 {
@@ -48,6 +67,7 @@
         background: white;
     }
 </style>
+
 </head>
 
 <body>
@@ -78,3 +98,4 @@ function go() {
 
 </body>
 </html>
+
