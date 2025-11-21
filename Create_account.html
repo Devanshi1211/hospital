@@ -9,15 +9,45 @@
   :root {
     --blue: #0D47A1;
     --purple: #7B3DFF;
+    --bg: #F3F4FB;
     --card-bg: #FFFFFF;
+    --text: #2C2C2C;
   }
 
   body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background-color: #0D47A1;
+
+    /* Single hospital image + gradient overlay */
+    background-image: linear-gradient(rgba(65,105,225,0.6), rgba(0,0,139,0.6)), url('hospital.jpg');
+    background-size: cover;       /* image screen puri cover kare */
+    background-position: center;  /* center align */
+    background-repeat: no-repeat; /* repeat na kare */
+    
+    /* Full height */
+    min-height: 100vh;            /* puri viewport height cover kare */
+    width: 100%;
   }
 
+
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    padding: 18px 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+
+  header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  /* Center card */
   .container {
     display: flex;
     justify-content: center;
@@ -100,10 +130,13 @@
     text-decoration: none;
     font-weight: 600;
   }
+
 </style>
 </head>
 
 <body>
+
+
 
 <div class="container">
   <div class="card">
@@ -111,15 +144,21 @@
     <p class="subtitle">Register to access the Hospital Queue System</p>
 
     <form onsubmit="return submitForm(event)">
-
+      
       <label>Full Name</label>
-      <input type="text" id="name" required>
+      <input type="text" id="name" placeholder="e.g. Devanshi Chauhan" required>
 
-      <label>Email</label>
-      <input type="email" id="email" required>
+      <div class="row">
+        <div style="flex:1;">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="example@gmail.com" required>
+        </div>
 
-      <label>Phone</label>
-      <input type="tel" id="phone" pattern="[0-9]{10}" required>
+        <div style="width: 150px;">
+          <label>Phone</label>
+          <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="9876543210" required>
+        </div>
+      </div>
 
       <label>Gender</label>
       <select id="gender" required>
@@ -130,18 +169,18 @@
       </select>
 
       <label>Address</label>
-      <textarea id="address" required></textarea>
+      <textarea id="address" placeholder="House No, Street, City" required></textarea>
 
       <label>Password</label>
-      <input type="password" id="pass" minlength="6" required>
+      <input type="password" id="pass" minlength="6" placeholder="Create password" required>
 
       <label>Confirm Password</label>
-      <input type="password" id="cpass" minlength="6" required>
+      <input type="password" id="cpass" minlength="6" placeholder="Re-enter password" required>
 
       <button class="btn" type="submit">Create Account</button>
 
-      <p class="helper">
-        Already have an account? <a href="Login.html">Login</a>
+      <p class="helper">Already have an account?  
+        <a href="login.html">Login</a>
       </p>
 
     </form>
@@ -152,37 +191,37 @@
 function submitForm(e) {
   e.preventDefault();
 
+  // getting all input values
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const gender = document.getElementById("gender").value;
   const address = document.getElementById("address").value.trim();
-  const p = document.getElementById("pass").value.trim();
-  const c = document.getElementById("cpass").value.trim();
+  const p = document.getElementById("pass").value;
+  const c = document.getElementById("cpass").value;
 
+  // password check
   if (p !== c) {
-    alert("Password and Confirm Password do not match!");
+    alert('Password and Confirm Password do not match');
     return false;
   }
 
-  const userData = {
+  // Save to LocalStorage
+  localStorage.setItem("user", JSON.stringify({
     name: name,
     email: email,
     phone: phone,
     gender: gender,
-    address: address,
-    password: p
-  };
+    address: address
+  }));
 
-  localStorage.setItem("user", JSON.stringify(userData));
-
-  alert("Account created successfully!");
-  window.location.href = "Login.html";
+  alert('Account created successfully!');
+  window.location.href = 'login.html';
 }
 </script>
 
+
 </body>
 </html>
-
 
 
