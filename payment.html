@@ -10,30 +10,13 @@
     font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 50px 20px;
-
-    /* Gradient overlay + hospital image */
     background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
     min-height: 100vh;
     text-align: center;
     color: white;
-
-    /* Smooth gradient animation */
-  }
-
-  @keyframes bgTransition {
-    0% {
-      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
-    }
-    50% {
-      background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
-    }
-    100% {
-      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
-    }
   }
 
   h1 {
@@ -51,7 +34,6 @@
     max-width: 420px;
     margin: auto;
     box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    animation: fadeUp 0.8s ease;
   }
 
   button {
@@ -66,20 +48,13 @@
     background: #1e5fac;
     color: white;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
   }
 
   button:hover {
     background: white;
     color: #1e5fac;
-    border-color: #1e5fac;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
+    border: 2px solid #1e5fac;
+    transform: translateY(-4px);
   }
 </style>
 
@@ -89,10 +64,26 @@
 <h1>💳 Select Payment Method</h1>
 
 <div class="payment-box">
-  <button onclick="window.location.href='upi.html'">💸 Pay with UPI</button>
-  <button onclick="window.location.href='card.html'">💳 Pay with Card</button>
-  <button onclick="window.location.href='receipt.html'">💵 Pay with Cash</button>
+  <button onclick="pay('UPI')">💸 Pay with UPI</button>
+  <button onclick="pay('Card')">💳 Pay with Card</button>
+  <button onclick="pay('Cash')">💵 Pay with Cash</button>
 </div>
+
+<script>
+  // Get all details from URL
+  const params = new URLSearchParams(window.location.search);
+
+  const hospital = params.get("hospital");
+  const name = params.get("name");
+  const email = params.get("email");
+  const date = params.get("date");
+
+  // Function when payment is selected
+  function pay(method) {
+    window.location.href =
+      `receipt.html?hospital=${encodeURIComponent(hospital)}&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&date=${encodeURIComponent(date)}&method=${encodeURIComponent(method)}`;
+  }
+</script>
 
 </body>
 </html>
