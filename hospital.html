@@ -7,11 +7,32 @@
 <style>
   body {
     margin: 0;
-    background: linear-gradient(135deg, #0D47A1, #0D47A1, #1e5799);
     font-family: "Poppins", sans-serif;
-    padding: 30px 20px;
+
+    /* 🔵 DARK ROYAL BLUE + Hospital Image */
+    background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     min-height: 100vh;
-    color: #fff;
+    padding: 50px 20px;
+    color: white;
+    text-align: center;
+
+    /* optional gradient animation */
+  }
+
+  @keyframes bgTransition {
+    0% {
+      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    }
+    50% {
+      background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
+    }
+    100% {
+      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    }
   }
 
   h1 {
@@ -93,19 +114,18 @@
 <div class="container" id="hospitalList"></div>
 
 <script>
-  // Hospital data = sample with real hospitals + dummy time & type
   const hospitalData = {
     vadodara: [
       { name: "Sterling Hospital Vadodara", type: "Private", doctor: "Dr. S. Gill", time: "08:00 - 20:00" },
       { name: "VINS Hospital Vadodara", type: "Private", doctor: "Dr. K. Nanavati", time: "09:00 - 18:00" },
-      { name: "SSG Hospital Vadodara", type: "Government", doctor: "Dr. R. Aiyer", time: "09:00 - 17:00" },
-      { name: "Padmashree Multispeciality Hospital", type: "Private", doctor: "Dr. P. Patel", time: "10:00 - 19:00" },
+      { name: "Baroda Heart Institute & Research Centre", type: "Private", doctor: "Dr. A. Desai", time: "08:00 - 17:00" },
       { name: "Metro Hospital Vadodara", type: "Private", doctor: "Dr. M. Shah", time: "09:00 - 21:00" },
-      { name: "Baroda Heart Institute", type: "Private", doctor: "Dr. A. Desai", time: "08:00 - 17:00" },
       { name: "Shree Krishna Hospital", type: "Private", doctor: "Dr. B. Mehta", time: "09:00 - 18:00" },
-      { name: "Balaji Netralaya", type: "Private", doctor: "Dr. S. Bhatia", time: "09:00 - 16:00" },
-      { name: "Sir T. Hospital", type: "Government", doctor: "Dr. R. Joshi", time: "09:00 - 14:00" },
-      { name: "Cancer Care Center Vadodara", type: "Private", doctor: "Dr. N. Shah", time: "10:00 - 17:00" }
+      { name: "Balaji Netralaya Vadodara", type: "Private", doctor: "Dr. S. Bhatia", time: "09:00 - 16:00" },
+      { name: "SSG Hospital Vadodara", type: "Government", doctor: "Dr. R. Aiyer", time: "09:00 - 17:00" },
+      { name: "Cancer Care Centre Vadodara", type: "Private", doctor: "Dr. N. Shah", time: "10:00 - 17:00" },
+      { name: "Parul Sevashram Hospital", type: "Private", doctor: "Dr. D. Vora", time: "09:00 - 20:00" },
+      { name: "Sal Hospital Vadodara", type: "Private", doctor: "Dr. P. Joshi", time: "24 Hours" }
     ],
     surat: [
       { name: "Kiran Hospital Surat", type: "Private", doctor: "Dr. P. Shah", time: "09:00 - 17:00" },
@@ -119,31 +139,131 @@
       { name: "J J Hospital Surat", type: "Government", doctor: "Dr. N. Mehta", time: "09:00 - 14:00" },
       { name: "Swastik Hospital Surat", type: "Private", doctor: "Dr. V. Singh", time: "10:00 - 20:00" }
     ],
+    rajkot: [
+      { name: "Rajkot Civil Hospital", type: "Government", doctor: "Dr. M. Desai", time: "09:00 - 17:00" },
+      { name: "Sterling Rajkot", type: "Private", doctor: "Dr. P. Shah", time: "10:00 - 20:00" },
+      { name: "Sadbhavna Hospital Rajkot", type: "Private", doctor: "Dr. V. Patel", time: "09:00 - 19:00" },
+      { name: "Bhatt Hospital Rajkot", type: "Private", doctor: "Dr. K. Bhatt", time: "09:00 - 18:00" },
+      { name: "Shree Ram Polyclinic", type: "Private", doctor: "Dr. R. Gandhi", time: "10:00 - 18:00" },
+      { name: "Vardhman Hospital Rajkot", type: "Private", doctor: "Dr. A. Mehta", time: "09:00 - 21:00" },
+      { name: "Gandhi Hospital Rajkot", type: "Government", doctor: "Dr. S. Joshi", time: "09:00 - 17:00" },
+      { name: "Rajkot Heart Institute", type: "Private", doctor: "Dr. D. Shah", time: "08:00 - 16:00" },
+      { name: "Jyoti Hospital Rajkot", type: "Private", doctor: "Dr. M. Vyas", time: "09:00 - 19:00" },
+      { name: "Shanti Polyclinic", type: "Private", doctor: "Dr. P. Desai", time: "10:00 - 20:00" }
+    ],
+    ahmedabad: [
+      { name: "Zydus Hospitals Ahmedabad", type: "Private", doctor: "Dr. X", time: "24 Hours" },
+      { name: "Narayana Multispeciality Hospital Ahmedabad", type: "Private", doctor: "Dr. Devi Shetty", time: "24 Hours" },
+      { name: "Sterling Hospitals Ahmedabad", type: "Private", doctor: "Dr. S. Gill", time: "24 Hours" },
+      { name: "Shalby Multi-Specialty Hospital Ahmedabad", type: "Private", doctor: "Dr. V. Shah", time: "24 Hours" },
+      { name: "Apollo Hospitals City Center, Ahmedabad", type: "Private", doctor: "Dr. A. Singh", time: "24 Hours" },
+      { name: "Krishna Heart Institute (Shalby)", type: "Private", doctor: "Dr. Atul Chokshi", time: "24 Hours" },
+      { name: "Victoria Jubilee Hospital for Women", type: "Government / Trust", doctor: "Dr. Y.", time: "09:00 - 17:00" },
+      { name: "A N Hospital (P N House)", type: "Government", doctor: "Dr. Z.", time: "09:00 - 15:00" },
+      { name: "CIMS Hospital (Care Institute of Medical Sciences)", type: "Private", doctor: "Dr. K. Patel", time: "24 Hours" },
+      { name: "HCG Cancer Centre Ahmedabad", type: "Private / Specialty", doctor: "Dr. Oncologist", time: "24 Hours" }
+    ],
     mumbai: [
-      { name: "Bombay Hospital & Medical Research Centre", type: "Private", doctor: "Dr. X", time: "24 Hours" },
+      { name: "Bombay Hospital & Medical Research Centre", type: "Private", doctor: "Dr. A", time: "24 Hours" },
       { name: "Jaslok Hospital & Research Centre", type: "Private", doctor: "Dr. Y", time: "24 Hours" },
-      { name: "St. George Hospital Mumbai", type: "Government", doctor: "Dr. Z", time: "09:00 - 17:00" },
-      { name: "KEM Hospital Mumbai", type: "Government", doctor: "Dr. A", time: "24 Hours" },
-      { name: "Bhabha Hospital Mumbai", type: "Government", doctor: "Dr. B", time: "08:00 - 20:00" },
-      { name: "Wockhardt Hospital Mumbai", type: "Private", doctor: "Dr. C", time: "09:00 - 19:00" },
-      { name: "Lilavati Hospital Mumbai", type: "Private", doctor: "Dr. D", time: "24 Hours" },
-      { name: "Saifee Hospital Mumbai", type: "Private", doctor: "Dr. E", time: "24 Hours" },
-      { name: "Holy Family Hospital Mumbai", type: "Private", doctor: "Dr. F", time: "24 Hours" },
-      { name: "Nair Hospital Mumbai", type: "Government", doctor: "Dr. G", time: "24 Hours" }
+      { name: "Lilavati Hospital & Research Centre", type: "Private", doctor: "Dr. D", time: "24 Hours" },
+      { name: "Saifee Hospital", type: "Private", doctor: "Dr. E", time: "24 Hours" },
+      { name: "Holy Family Hospital Mumbai", type: "Government / Trust", doctor: "Dr. F", time: "24 Hours" },
+      { name: "Kokilaben Dhirubhai Ambani Hospital", type: "Private", doctor: "Dr. G", time: "24 Hours" },
+      { name: "Wockhardt Hospital Mumbai", type: "Private", doctor: "Dr. H", time: "09:00 - 19:00" },
+      { name: "Tata Memorial Hospital", type: "Government / Cancer", doctor: "Dr. I", time: "24 Hours" },
+      { name: "Nanavati Super Speciality Hospital", type: "Private", doctor: "Dr. J", time: "24 Hours" },
+      { name: "Breach Candy Hospital", type: "Private", doctor: "Dr. K", time: "24 Hours" }
     ],
     delhi: [
       { name: "AIIMS Delhi", type: "Government", doctor: "Dr. R. K. Gupta", time: "24 Hours" },
       { name: "Safdarjung Hospital", type: "Government", doctor: "Dr. S. Sharma", time: "24 Hours" },
       { name: "Ram Manohar Lohia Hospital", type: "Government", doctor: "Dr. P. Singh", time: "24 Hours" },
-      { name: "Sanjeevan Hospital", type: "Private", doctor: "Dr. Prem Aggarwal", time: "24 Hours" },
       { name: "Fortis Escorts Heart Institute", type: "Private", doctor: "Dr. K. Kapoor", time: "09:00 - 18:00" },
       { name: "Apollo Hospital Delhi", type: "Private", doctor: "Dr. L. Mehta", time: "24 Hours" },
       { name: "Max Super Speciality Hospital Saket", type: "Private", doctor: "Dr. M. Batra", time: "24 Hours" },
       { name: "BLK Super Speciality Hospital", type: "Private", doctor: "Dr. N. Khandelwal", time: "24 Hours" },
-      { name: "Mohalla Clinic Delhi", type: "Government", doctor: "Dr. A. Kumar", time: "09:00 - 15:00" },
-      { name: "Holy Family Hospital Delhi", type: "Private", doctor: "Dr. R. Gupta", time: "24 Hours" }
+      { name: "Holy Family Hospital Delhi", type: "Private / Trust", doctor: "Dr. R. Gupta", time: "24 Hours" },
+      { name: "Indraprastha Apollo Hospital", type: "Private", doctor: "Dr. S. Roy", time: "24 Hours" },
+      { name: "Sir Ganga Ram Hospital", type: "Private", doctor: "Dr. T. Sood", time: "24 Hours" }
+    ],
+    jaipur: [
+      { name: "Jaipur Golden Hospital", type: "Private", doctor: "Dr. A. Mehta", time: "09:00 - 19:00" },
+      { name: "Fortis Escorts Hospital Jaipur", type: "Private", doctor: "Dr. B. Singh", time: "24 Hours" },
+      { name: "SMS Hospital Jaipur", type: "Government", doctor: "Dr. C. Sharma", time: "24 Hours" },
+      { name: "Apex Hospital Jaipur", type: "Private", doctor: "Dr. D. Mehta", time: "09:00 - 18:00" },
+      { name: "Mahaveer Hospital Jaipur", type: "Private", doctor: "Dr. E. Jain", time: "24 Hours" },
+      { name: "Wockhardt Hospital Jaipur", type: "Private", doctor: "Dr. F. Gupta", time: "24 Hours" },
+      { name: "Alchemist Hospital Jaipur", type: "Private", doctor: "Dr. G. Verma", time: "09:00 - 20:00" },
+      { name: "Sardar Patel Hospital Jaipur", type: "Public", doctor: "Dr. H. Kumar", time: "09:00 - 17:00" },
+      { name: "Bhandari Hospital Jaipur", type: "Private", doctor: "Dr. I. Bhandari", time: "24 Hours" },
+      { name: "MGM Hospital Jaipur", type: "Private", doctor: "Dr. J. Singh", time: "24 Hours" }
+    ],
+    bengaluru: [
+      { name: "Apollo Hospitals Bannerghatta Road", type: "Private", doctor: "Dr. Z", time: "24 Hours" },  
+      { name: "Manipal Hospital - Old Airport Road", type: "Private", doctor: "Dr. A", time: "24 Hours" }, 
+      { name: "Fortis Hospital Cunningham Road", type: "Private", doctor: "Dr. B", time: "24 Hours" }, 
+      { name: "Columbia Asia Hospital Hebbal", type: "Private", doctor: "Dr. C", time: "24 Hours" }, 
+      { name: "BGS Gleneagles Global Hospitals Kengeri", type: "Private", doctor: "Dr. D", time: "24 Hours" },  
+      { name: "Aster CMI Hospital Hebbal", type: "Private", doctor: "Dr. E", time: "24 Hours" }, 
+      { name: "Sparsh Hospital Bommasandra", type: "Private", doctor: "Dr. F", time: "24 Hours" },  
+      { name: "Hosmat Hospital Magrath Road", type: "Specialty / Ortho", doctor: "Dr. G", time: "24 Hours" }, 
+      { name: "Kidwai Memorial Institute of Oncology", type: "Government / Oncology", doctor: "Dr. H", time: "24 Hours" },
+      { name: "Victoria Hospital Bengaluru", type: "Government", doctor: "Dr. I", time: "24 Hours" }, 
+    ],
+    hyderabad: [
+      { name: "Apollo Health City, Jubilee Hills", type: "Private", doctor: "Dr. J", time: "24 Hours" },  
+      { name: "KIMS Hospitals Hyderabad", type: "Private / Multi", doctor: "Dr. K", time: "24 Hours" },
+      { name: "Yashoda Hospitals Hyderabad", type: "Private", doctor: "Dr. L", time: "24 Hours" },  
+      { name: "Aster Prime Hospital Hyderabad", type: "Private", doctor: "Dr. M", time: "24 Hours" },  
+      { name: "Care Hospital Hyderabad", type: "Private", doctor: "Dr. N", time: "24 Hours" },  
+      { name: "Gleneagles Global Hospital Hyderabad", type: "Private", doctor: "Dr. O", time: "24 Hours" },  
+      { name: "Basavatarakam Indo American Cancer Hospital", type: "Specialty / Cancer", doctor: "Dr. P", time: "24 Hours" },  
+      { name: "Government Chest Hospital Hyderabad", type: "Government", doctor: "Dr. Q", time: "09:00 - 17:00" },  
+      { name: "Owaisi Hospital & Research Centre", type: "Private / Teaching", doctor: "Dr. R", time: "24 Hours" },  
+      { name: "Sagar Hospitals Hyderabad", type: "Private", doctor: "Dr. S", time: "24 Hours" }  
+    ],
+
+    pune: [
+      { name: "Jehangir Hospital Pune", type: "Private / Multi", doctor: "Dr. S. Kulkarni", time: "24 Hours" },  
+      { name: "Ruby Hall Clinic Pune", type: "Private", doctor: "Dr. T", time: "24 Hours" },  
+      { name: "Sahyadri Hospital Pune", type: "Private / Chain", doctor: "Dr. U", time: "24 Hours" },  
+      { name: "Deenanath Mangeshkar Hospital Pune", type: "Charitable / Multi", doctor: "Dr. V", time: "24 Hours" },  
+      { name: "Aditya Birla Memorial Hospital", type: "Private", doctor: "Dr. W", time: "24 Hours" },  
+      { name: "Columbia Asia Hospital Pune", type: "Private", doctor: "Dr. X", time: "24 Hours" },  
+      { name: "Jehangir Specialty Centre", type: "Specialty", doctor: "Dr. Y", time: "09:00 - 18:00" },  
+      { name: "Wanless Hospital Pune", type: "Charitable", doctor: "Dr. Z", time: "24 Hours" },  
+      { name: "Poona Hospital & Research Centre", type: "Multi", doctor: "Dr. AA", time: "24 Hours" },  
+      { name: "Noble Hospital Pune", type: "Private", doctor: "Dr. BB", time: "24 Hours" }  
+    ],
+
+    chennai: [
+      { name: "Apollo Hospitals Chennai (Greams Road)", type: "Private", doctor: "Dr. A", time: "24 Hours" },  
+      { name: "MIOT International Chennai", type: "Private", doctor: "Dr. B", time: "24 Hours" },  
+      { name: "Gleneagles Global Health City Chennai", type: "Private", doctor: "Dr. C", time: "24 Hours" },  
+      { name: "Fortis Malar Hospital Chennai", type: "Private", doctor: "Dr. D", time: "24 Hours" },  
+      { name: "SRM Hospital Chennai", type: "Private", doctor: "Dr. E", time: "24 Hours" },  
+      { name: "Kauvery Hospital Chennai", type: "Private", doctor: "Dr. F", time: "24 Hours" },  
+      { name: "Sri Ramachandra Medical Centre", type: "Private / Teaching", doctor: "Dr. G", time: "24 Hours" },  
+      { name: "Sankara Nethralaya Chennai", type: "Specialty / Eye", doctor: "Dr. H", time: "09:00 - 17:00" },  
+      { name: "Madras Medical Mission", type: "Multi", doctor: "Dr. I", time: "24 Hours" },  
+      { name: "Government Stanley Hospital", type: "Government", doctor: "Dr. J", time: "24 Hours" }  
+    ],
+
+    kolkata: [
+      { name: "Apollo Gleneagles Hospitals Kolkata", type: "Private", doctor: "Dr. K", time: "24 Hours" },  
+      { name: "Peerless Hospital & B K Roy Research Centre", type: "Private", doctor: "Dr. L", time: "24 Hours" },  
+      { name: "AMRI Hospitals Kolkata (Dhakuria)", type: "Private", doctor: "Dr. M", time: "24 Hours" },  
+      { name: "Desun Hospital Kolkata", type: "Private / JCI", doctor: "Dr. N", time: "24 Hours" },  
+      { name: "Calcutta Medical Research Institute", type: "Private / Research", doctor: "Dr. O", time: "24 Hours" },  
+      { name: "Kolkata Medical College & Hospital", type: "Government / Teaching", doctor: "Dr. P", time: "24 Hours" },  
+      { name: "TATA Medical Centre Kolkata", type: "Cancer / Multi", doctor: "Dr. Q", time: "24 Hours" },  
+      { name: "AMRI Salt Lake Hospital", type: "Private", doctor: "Dr. R", time: "24 Hours" },  
+      { name: "RG Kar Medical College & Hospital", type: "Government / Teaching", doctor: "Dr. S", time: "24 Hours" },  
+      { name: "Susrut Eye Foundation & Research Centre", type: "Eye", doctor: "Dr. T", time: "09:00 - 17:00" }  
     ]
-  };
+    
+};
 
   const urlParams = new URLSearchParams(window.location.search);
   const city = urlParams.get("city");
