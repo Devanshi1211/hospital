@@ -34,7 +34,6 @@
     opacity: 0.8;
   }
 
-  /* Login Button */
   .login-btn {
     background: #FFFFFF;
     color: #0D47A1;
@@ -105,7 +104,6 @@
     font-weight: 600;
   }
 
-  /* Footer */
   footer {
     background: #0D47A1;
     color: white;
@@ -119,6 +117,36 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* User area dropdown */
+  #userArea {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  #logoutDropdown {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: white;
+    color: #0D47A1;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    padding: 8px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 100px;
+    text-align: center;
+    z-index: 100;
+  }
+
+  #logoutDropdown:hover {
+    background: #BBDEFB;
+  }
 </style>
 
 </head>
@@ -126,21 +154,21 @@
 
 <header>
   <h2>💙 RoyalCare Hospital</h2>
-
-  <!-- NAVIGATION -->
-  <nav id="navMenu">
+  <nav>
     <a href="#">Home</a>
     <a href="doctors.html">Doctors</a>
     <a href="cat.html">Departments</a>
     <a href="state.html">Book Appointment</a>
     <a href="contact.html">Contact</a>
-    <a href="Login.html" class="login-btn" id="loginButton">Login</a>
+
+    <a href="login.html" class="login-btn">Login</a>
   </nav>
 
-  <!-- USER INFO AFTER LOGIN -->
-  <div id="userArea" style="display:none; align-items:center; gap:12px;">
+  <!-- User Info After Login -->
+  <div id="userArea" style="display:none;">
     <img id="userIcon" src="" width="32" style="border-radius:50%;">
     <span id="userName" style="font-weight:600;"></span>
+    <div id="logoutDropdown">Logout</div>
   </div>
 </header>
 
@@ -173,31 +201,57 @@
 
 <script>
 window.onload = () => {
-  let logged = localStorage.getItem("isLoggedIn");
-  let user = JSON.parse(localStorage.getItem("user"));
-
-  const loginBtn = document.getElementById("loginButton");
+  const loginBtn = document.querySelector(".login-btn");
   const userArea = document.getElementById("userArea");
+  const logoutDropdown = document.getElementById("logoutDropdown");
 
-  // ❗ FIX: Check if loginBtn exists (otherwise error)
-  if (logged === "true" && user) {
+  function updateHeader() {
+    const logged = localStorage.getItem("isLoggedIn");
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    if (loginBtn) {
-      loginBtn.style.display = "none";  
+    if (logged === "true" && user) {
+      loginBtn.style.display = "none";
+      userArea.style.display = "flex";
+      document.getElementById("userName").innerText = user.name;
+      document.getElementById("userIcon").src = "https://cdn-icons-png.flaticon.com/512/9131/9131529.png";
+    } else {
+      loginBtn.style.display = "inline-block";
+      userArea.style.display = "none";
+      logoutDropdown.style.display = "none"; // hide dropdown on logout
     }
-
-    userArea.style.display = "flex";
-
-    document.getElementById("userName").innerText = user.name;
-
-    document.getElementById("userIcon").src =
-      "https://cdn-icons-png.flaticon.com/512/9131/9131529.png";
   }
+
+  updateHeader(); // Initial check
+
+  // Toggle dropdown on click
+  userArea.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (logoutDropdown.style.display === "block") {
+      logoutDropdown.style.display = "none";
+    } else {
+      logoutDropdown.style.display = "block";
+    }
+  });
+
+  // Logout
+  logoutDropdown.addEventListener("click", () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    alert("Logged out successfully!");
+    updateHeader(); // Update header immediately
+  });
+
+  // Hide dropdown if click outside
+  document.addEventListener("click", () => {
+    logoutDropdown.style.display = "none";
+  });
 };
 </script>
 
+
 </body>
 </html>
+
 
 
 
