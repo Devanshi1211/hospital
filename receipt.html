@@ -7,32 +7,15 @@
 <style>
   body {
     font-family: "Poppins", sans-serif;
-
-    /* Gradient overlay + hospital image */
     background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
-
     margin: 0;
     padding: 40px 20px;
     text-align: center;
     color: white;
-
-    /* Smooth gradient animation */
-  }
-
-  @keyframes bgTransition {
-    0% {
-      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
-    }
-    50% {
-      background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
-    }
-    100% {
-      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
-    }
   }
 
   .receipt {
@@ -93,13 +76,12 @@
 </div>
 
 <script>
-  // GET DATA FROM LOGIN + APPOINTMENT PAGES
-  const loginData = JSON.parse(localStorage.getItem("user")) || {};
+  // GET DATA FROM URL PARAMETERS
   const params = new URLSearchParams(window.location.search);
 
   const hospital = params.get("hospital") || "Hospital";
-  const name = params.get("name") || loginData.name || "Patient";
-  const email = params.get("email") || loginData.email || "example@mail.com";
+  const name = params.get("name") || "Patient";
+  const email = params.get("email") || "example@mail.com";
   const date = params.get("date") || "2025-01-01";
   const method = params.get("method") || "Cash"; // Cash / UPI / Card
 
@@ -131,7 +113,7 @@
   if (reminderTime > 0 && "Notification" in window) {
     setTimeout(() => {
       new Notification("Your turn is coming!", {
-        body: `Hi ${name}, your token number ${token} will be called in 10 minutes.`,
+        body: `Hi ${name}, your token number ${token} at ${hospital} will be called in 10 minutes.`,
         icon: "https://cdn-icons-png.flaticon.com/512/2966/2966487.png"
       });
     }, reminderTime);
@@ -140,17 +122,16 @@
   // DOWNLOAD RECEIPT FUNCTION
   function downloadReceipt() {
     const content = `
-      Appointment Receipt
+Appointment Receipt
 
-      Hospital: ${hospital}
-      Patient Name: ${name}
-      Email: ${email}
-      Appointment Date: ${date}
-      Payment Method: ${method}
-      Token Number: ${token}
-      Approx Waiting Time: ${approxMinutes} minutes
+Hospital: ${hospital}
+Patient Name: ${name}
+Email: ${email}
+Appointment Date: ${date}
+Payment Method: ${method}
+Token Number: ${token}
+Approx Waiting Time: ${approxMinutes} minutes
     `;
-
     const blob = new Blob([content], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
