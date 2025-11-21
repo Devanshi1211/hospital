@@ -10,21 +10,39 @@
         margin: 0;
         font-family: "Poppins", sans-serif;
 
-        /* 🔵 DARKER ROYAL BLUE THEME */
-        background: linear-gradient(135deg, #0D47A1, #0D47A1, #1e5799);
-        
+        /* 🔵 DARK ROYAL BLUE + Hospital Image */
+        background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
         min-height: 100vh;
         padding: 50px 20px;
+        color: white;
+        text-align: center;
+
+        /* optional gradient animation */
+    }
+
+    @keyframes bgTransition {
+        0% {
+            background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+        }
+        50% {
+            background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
+        }
+        100% {
+            background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+        }
     }
 
     h1 {
         text-align: center;
-        color: white;
         font-size: 42px;
         font-weight: 700;
         margin-bottom: 45px;
         letter-spacing: 1px;
-        text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+        text-shadow: 0 3px 6px rgba(0,0,0,0.5);
         animation: fadeDown 0.7s ease;
     }
 
@@ -100,3 +118,4 @@ function openCity(cityName) {
 
 </body>
 </html>
+
