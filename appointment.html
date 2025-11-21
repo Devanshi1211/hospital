@@ -9,20 +9,35 @@
   body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #0D47A1, #0D47A1, #1e5799);
-    min-height: 100vh;
+
+    /* Single hospital image + gradient overlay */
+    background-image: linear-gradient(rgba(13,71,161,0.6), rgba(60,99,130,0.6)), url('hospital.jpg');
+    background-size: cover;       /* cover full screen */
+    background-position: center;  /* center image */
+    background-repeat: no-repeat; /* no repeat */
+    min-height: 100vh;            /* full viewport height */
     padding: 40px 20px;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: white;
+    text-align: center;
+
+    /* Smooth gradient animation (optional) */
+  }
+
+  @keyframes bgTransition {
+      0% {
+          background-image: linear-gradient(rgba(13,71,161,0.6), rgba(60,99,130,0.6)), url('hospital.jpg');
+      }
+      50% {
+          background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
+      }
+      100% {
+          background-image: linear-gradient(rgba(13,71,161,0.6), rgba(60,99,130,0.6)), url('hospitale.jpg');
+      }
   }
 
   h1 {
     font-size: 34px;
     margin-bottom: 25px;
-    text-align: center;
-    letter-spacing: 1px;
     text-shadow: 0 2px 6px rgba(0,0,0,0.5);
   }
 
@@ -37,6 +52,7 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
+    margin: auto; /* center horizontally */
     backdrop-filter: blur(10px);
     animation: fadeIn 0.8s ease;
   }
@@ -44,8 +60,8 @@
   label {
     font-size: 15px;
     font-weight: 600;
-    margin-bottom: -10px;
     color: #0a3d62;
+    text-align: left;
   }
 
   input {
@@ -85,6 +101,7 @@
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
   }
+
 </style>
 </head>
 
@@ -110,10 +127,12 @@
 </form>
 
 <script>
+  // Get hospital name from query param
   const params = new URLSearchParams(window.location.search);
   const hospital = params.get("hospital");
   if(hospital) document.getElementById("hospitalName").value = hospital;
 
+  // Form submit
   document.getElementById("appointmentForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -122,14 +141,13 @@
     const email = document.getElementById("email").value;
     const date = document.getElementById("date").value;
 
+    // Redirect to payment page with query params
     window.location.href =
-      `payment.html?hospital=${hospital}&name=${name}&email=${email}&date=${date}`;
+      `payment.html?hospital=${encodeURIComponent(hospital)}&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&date=${encodeURIComponent(date)}`;
   });
 </script>
 
 </body>
 </html>
-
-
 
 
