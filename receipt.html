@@ -7,12 +7,32 @@
 <style>
   body {
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #0a3d62, #1e56a0, #82ccdd);
+
+    /* Gradient overlay + hospital image */
+    background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     min-height: 100vh;
+
     margin: 0;
     padding: 40px 20px;
     text-align: center;
     color: white;
+
+    /* Smooth gradient animation */
+  }
+
+  @keyframes bgTransition {
+    0% {
+      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    }
+    50% {
+      background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
+    }
+    100% {
+      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    }
   }
 
   .receipt {
@@ -24,6 +44,10 @@
     box-shadow: 0 12px 25px rgba(0,0,0,0.3);
     color: #0a3d62;
     animation: fadeUp 0.7s ease;
+  }
+
+  h1 {
+    text-shadow: 0 3px 8px rgba(0,0,0,0.5);
   }
 
   h2 {
@@ -69,31 +93,27 @@
 </div>
 
 <script>
-  // Get data
+  // GET DATA FROM LOGIN + APPOINTMENT PAGES
+  const loginData = JSON.parse(localStorage.getItem("user")) || {};
   const params = new URLSearchParams(window.location.search);
 
-  const hospital = params.get("hospital");
-  const name = params.get("name");
-  const email = params.get("email");
-  const date = params.get("date");
+  const hospital = params.get("hospital") || "Hospital";
+  const name = params.get("name") || loginData.name || "Patient";
+  const email = params.get("email") || loginData.email || "example@mail.com";
+  const date = params.get("date") || "2025-01-01";
+  const method = params.get("method") || "Cash"; // Cash / UPI / Card
 
-  // Default payment method = CASH
-  const method = "Cash";
-
-  // Random token number between 1 and 40
+  // Token & Waiting Time
   const token = Math.floor(Math.random() * 40) + 1;
-
-  // Each patient takes approx 5 minutes
   const approxMinutes = (token - 1) * 5;
-
-  // Reminder time (10 min before)
   const reminderTime = (approxMinutes - 10) * 60 * 1000;
 
+  // Display details
   document.getElementById("details").innerHTML = `
     <strong>Hospital:</strong> ${hospital}<br>
-    <strong>Name:</strong> ${name}<br>
+    <strong>Patient Name:</strong> ${name}<br>
     <strong>Email:</strong> ${email}<br>
-    <strong>Date:</strong> ${date}<br>
+    <strong>Appointment Date:</strong> ${date}<br>
     <strong>Payment Method:</strong> ${method}<br>
   `;
 
@@ -103,7 +123,7 @@
     ⏳ You will receive a reminder 10 minutes before your turn.
   `;
 
-  // Notifications
+  // Browser Notification for Reminder
   if ("Notification" in window) {
     Notification.requestPermission();
   }
@@ -125,10 +145,10 @@
       Hospital: ${hospital}
       Patient Name: ${name}
       Email: ${email}
-      Date: ${date}
+      Appointment Date: ${date}
       Payment Method: ${method}
       Token Number: ${token}
-      Waiting Time: ${approxMinutes} minutes
+      Approx Waiting Time: ${approxMinutes} minutes
     `;
 
     const blob = new Blob([content], { type: "text/plain" });
@@ -141,3 +161,4 @@
 
 </body>
 </html>
+
