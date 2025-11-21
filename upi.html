@@ -9,17 +9,38 @@
   body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #0a3d62, #1e56a0, #3c6382);
+
+    /* Gradient overlay + hospital image */
+    background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
     color: white;
     text-align: center;
     padding: 40px 20px;
+
+    /* Smooth gradient animation */
+  }
+
+  @keyframes bgTransition {
+    0% {
+      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    }
+    50% {
+      background-image: linear-gradient(rgba(0,0,205,0.6), rgba(25,25,112,0.6)), url('hospital.jpg');
+    }
+    100% {
+      background-image: linear-gradient(rgba(13,71,161,0.6), rgba(30,87,153,0.6)), url('hospital.jpg');
+    }
   }
 
   h1 {
     font-size: 36px;
     margin-bottom: 10px;
     letter-spacing: 1px;
-    text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    text-shadow: 0 3px 6px rgba(0,0,0,0.5);
   }
 
   h3 {
@@ -28,7 +49,7 @@
   }
 
   .pay-box {
-    background: #ffffff;
+    background: rgba(255,255,255,0.95);
     width: 360px;
     margin: auto;
     padding: 25px;
@@ -57,6 +78,7 @@
     border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
+    transition: 0.3s;
   }
 
   .pay-btn:hover {
@@ -103,3 +125,4 @@
 
 </body>
 </html>
+
