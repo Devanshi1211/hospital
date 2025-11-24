@@ -78,15 +78,31 @@
   const email = params.get("email");
   const date = params.get("date");
 
-  // Function when payment is selected
   function pay(method) {
-    window.location.href =
-      `receipt.html?hospital=${encodeURIComponent(hospital)}&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&date=${encodeURIComponent(date)}&method=${encodeURIComponent(method)}`;
+
+    // UPI → upi.html open karega
+    if (method === "UPI") {
+      window.location.href = "upi.html";
+      return;
+    }
+
+    // Card → card.html open karega
+    if (method === "Card") {
+      window.location.href = "card.html";
+      return;
+    }
+
+    // Cash → direct receipt.html open hoga
+    if (method === "Cash") {
+      window.location.href =
+        `receipt.html?hospital=${encodeURIComponent(hospital)}&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&date=${encodeURIComponent(date)}&method=Cash`;
+      return;
+    }
   }
 </script>
 
+
 </body>
 </html>
-
 
 
