@@ -3,256 +3,390 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> RoyalCare</title>
+<title>RoyalCare Hospital</title>
+
+<!-- Google Font -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 
 <style>
-  body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background-color: #F5F5F5;
-  }
-
-  /* Header */
-  header {
-    background: #0D47A1;
-    color: white;
-    padding: 18px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 3px 10px rgba(0,0,0,0.2);
-  }
-
-  header a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: 500;
-  }
-
-  header a:hover {
-    opacity: 0.8;
-  }
-
-  .login-btn {
-    background: #FFFFFF;
-    color: #0D47A1;
-    padding: 8px 18px;
-    border-radius: 6px;
-    font-weight: 600;
-    border: 2px solid white;
-  }
-
-  .login-btn:hover {
-    background: #BBDEFB;
-  }
-
-  /* Hero Section */
-  .hero {
-    background: linear-gradient(135deg, #1565C0, #0D47A1);
-    color: white;
-    padding: 70px 40px;
-    text-align: center;
-  }
-
-  .hero h1 {
-    font-size: 46px;
-    margin: 0;
-    font-weight: bold;
-  }
-
-  .hero p {
-    font-size: 19px;
-    opacity: 0.9;
-  }
-
-  .btn {
-    margin-top: 20px;
-    background: #FFFFFF;
-    padding: 12px 28px;
-    border-radius: 6px;
-    color: #0D47A1;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    border: 2px solid white;
-  }
-
-  .btn:hover {
-    background: #BBDEFB;
-  }
-
-  /* Services Section */
-  .services {
-    padding: 40px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-  }
-
-  .service-card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    border-left: 8px solid #1565C0;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-
-  .service-card h3 {
-    color: #0D47A1;
-    font-weight: 600;
-  }
-
-  footer {
-    background: #0D47A1;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    margin-top: 30px;
-  }
-
-  @media (max-width: 768px) {
-    .services {
-      grid-template-columns: 1fr;
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: #f5f7fa;
     }
-  }
 
-  /* User area dropdown */
-  #userArea {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-    cursor: pointer;
-  }
+    /* NAVBAR */
+    header {
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 50px;
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
 
-  #logoutDropdown {
-    display: none;
-    position: absolute;
-    top: 45px;
-    right: 0;
-    background: white;
-    color: #0D47A1;
-    border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    padding: 8px 15px;
-    font-weight: 600;
-    cursor: pointer;
-    min-width: 100px;
-    text-align: center;
-    z-index: 100;
-  }
+    .logo {
+        font-size: 26px;
+        font-weight: 700;
+        color: #0B4DD6;
+    }
 
-  #logoutDropdown:hover {
-    background: #BBDEFB;
-  }
+    nav a {
+        text-decoration: none;
+        margin-left: 22px;
+        color: #374151;
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    nav a:hover {
+        color: #0B4DD6;
+    }
+
+    .login-btn {
+        margin-left: 25px;
+        background: #0B4DD6;
+        padding: 8px 18px;
+        color: white;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    /* USER DROPDOWN */
+    .user-box {
+        position: relative;
+        cursor: pointer;
+        margin-left: 20px;
+        font-weight: 600;
+        color: #0B4DD6;
+        display: none;
+    }
+
+    .username {
+        padding: 8px 12px;
+        background: #eaf2ff;
+        border-radius: 6px;
+    }
+
+    .dropdown {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        background: white;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        display: none;
+        min-width: 130px;
+        padding: 8px 0;
+        z-index: 100;
+    }
+
+    .dropdown a {
+        display: block;
+        padding: 10px 14px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .dropdown a:hover {
+        background: #f1f5f9;
+    }
+
+    /* HERO SECTION */
+    .hero {
+        background: linear-gradient(135deg, #0B4DD6, #0D68F0);
+        padding: 80px 20px;
+        text-align: center;
+        color: white;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .hero p {
+        font-size: 20px;
+        opacity: 0.9;
+    }
+
+    .hero button {
+        margin-top: 20px;
+        background: white;
+        color: #0B4DD6;
+        border: none;
+        padding: 14px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .hero button:hover {
+        background: #dbeafe;
+    }
+
+    .features {
+        padding: 60px 50px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 28px;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .feature-card h3 {
+        color: #0B4DD6;
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+        margin-top: 30px;
+        color: #0B4DD6;
+    }
+
+    .steps {
+        padding: 50px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    .step {
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .why {
+        padding: 60px 50px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    .why-card {
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .why-card h4 {
+        color: #0B4DD6;
+        margin-bottom: 8px;
+    }
+
+    .queue-section {
+        margin: 60px auto;
+        text-align: center;
+    }
+
+    .queue-box {
+        background: white;
+        width: 60%;
+        margin: auto;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .queue-box input {
+        width: 80%;
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+    }
+
+    .queue-box button {
+        margin-top: 15px;
+        padding: 12px 24px;
+        background: #0B4DD6;
+        color: white;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    footer {
+        padding: 40px;
+        background: #0B4DD6;
+        color: white;
+        text-align: center;
+        margin-top: 40px;
+    }
+
 </style>
 
 </head>
 <body>
 
 <header>
-  <h2>💙 RoyalCare </h2>
-  <nav>
-    <a href="#">Home</a>
-    <a href="doctors.html">Doctors</a>
-    <a href="cat.html">Departments</a>
-    <a href="state.html">Book Appointment</a>
-    <a href="contact.html">Contact</a>
+    <div class="logo">💙RoyalCare</div>
 
-    <a href="Login.html" class="login-btn">Login</a>
-  </nav>
+    <nav id="navMenu">
+        <a href="#">Home</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="cat.html">Departments</a>
+        <a href="appointment.html">Appointment</a>
+        <a href="contact.html">Contact</a>
 
-  <!-- User Info After Login -->
-  <div id="userArea" style="display:none;">
-    <img id="userIcon" src="" width="32" style="border-radius:50%;">
-    <span id="userName" style="font-weight:600;"></span>
-    <div id="logoutDropdown">Logout</div>
-  </div>
+        <!-- USER DISPLAY -->
+        <div id="userBox" class="user-box">
+            <span id="usernameDisplay" class="username"></span>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="#" onclick="logoutUser()">Logout</a>
+            </div>
+        </div>
+
+        <!-- LOGIN BUTTON -->
+        <a href="Login.html" class="login-btn" id="loginBtn">Login</a>
+    </nav>
 </header>
 
+<!-- HERO -->
 <div class="hero">
-  <h1>Premium Healthcare, Trusted by All</h1>
-  <p>Your health is our priority with world-class doctors and services.</p>
-  <a class="btn" href="state.html">Book Appointment</a>
+    <h1>Welcome to RoyalCare</h1>
+    <p>Your trusted partner for world-class healthcare services.</p>
+    <button>Book Appointment</button>
 </div>
 
-<section class="services">
-  <div class="service-card">
-    <h3>👨‍⚕️ Specialist Doctors</h3>
-    <p>World-class specialists available at your service.</p>
+<!-- FEATURES -->
+<section class="features">
+  <div class="feature-card">
+    <span>👨‍⚕️</span>
+    <h3>Specialist Doctors</h3>
+    <p>Experienced consultants available for every department.</p>
   </div>
 
-  <div class="service-card">
-    <h3>🧪 Advanced Diagnostics</h3>
-    <p>Cutting-edge lab systems for accurate testing.</p>
+  <div class="feature-card">
+    <span>🧪</span>
+    <h3>Advanced Diagnostics</h3>
+    <p>Fast and accurate tests with quick reports.</p>
   </div>
 
-  <div class="service-card">
-    <h3>🚑 Emergencies 24/7</h3>
-    <p>Quick response emergency team round the clock.</p>
+  <div class="feature-card">
+    <span>🚑</span>
+    <h3>24/7 Emergency</h3>
+    <p>Rapid response team for urgent care.</p>
+  </div>
+
+  <div class="feature-card">
+    <span>📱</span>
+    <h3>Online Queue System</h3>
+    <p>Get token & track waiting time from your phone.</p>
   </div>
 </section>
 
+<!-- HOW IT WORKS -->
+<h2 class="section-title">How It Works</h2>
+<div class="steps">
+    <div class="step"><h4>1. Choose Department</h4></div>
+    <div class="step"><h4>2. Select Doctor</h4></div>
+    <div class="step"><h4>3. Pick Time Slot</h4></div>
+    <div class="step"><h4>4. Confirm Details</h4></div>
+    <div class="step"><h4>5. Get Token Number</h4></div>
+    <div class="step"><h4>6. Track Live Queue</h4></div>
+</div>
+
+<!-- WHY CHOOSE -->
+<h2 class="section-title">Why Choose RoyalCare?</h2>
+<section class="why">
+  <div class="why-card">
+    <span>🩺</span>
+    <h4>Trusted Doctors</h4>
+    <p>Board-certified specialists for accurate diagnoses.</p>
+  </div>
+
+  <div class="why-card">
+    <span>⏱️</span>
+    <h4>Fast Service</h4>
+    <p>Smart scheduling that reduces waiting time.</p>
+  </div>
+
+  <div class="why-card">
+    <span>💊</span>
+    <h4>Comprehensive Care</h4>
+    <p>End-to-end services from diagnostics to treatment.</p>
+  </div>
+</section>
+
+<!-- TRACK QUEUE -->
+<div class="queue-section">
+    <h2 class="section-title">Track Your Queue</h2>
+    <div class="queue-box">
+        <input id="phoneInput" type="text" placeholder="Enter phone number">
+        <button onclick="trackQueue()">Check Status</button>
+        <p id="queueResult"></p>
+    </div>
+</div>
+
 <footer>
-  © 2025 RoyalCare | Professional. Trusted. Caring.
+   © 2025 RoyalCare | Caring for You Always 💙
 </footer>
 
 <script>
-window.onload = () => {
-  const loginBtn = document.querySelector(".login-btn");
-  const userArea = document.getElementById("userArea");
-  const logoutDropdown = document.getElementById("logoutDropdown");
+function trackQueue() {
+    let phone = document.getElementById("phoneInput").value;
+    if (phone.trim() === "") {
+        alert("Please enter phone number");
+        return;
+    }
+    document.getElementById("queueResult").innerHTML =
+        "Estimated waiting time: <b>28 minutes</b>";
+}
 
-  function updateHeader() {
-    const logged = localStorage.getItem("isLoggedIn");
+document.addEventListener("DOMContentLoaded", function () {
     const user = JSON.parse(localStorage.getItem("user"));
+    const isLogged = localStorage.getItem("isLoggedIn");
 
-    if (logged === "true" && user) {
-      loginBtn.style.display = "none";
-      userArea.style.display = "flex";
-      document.getElementById("userName").innerText = user.name;
-      document.getElementById("userIcon").src = "https://cdn-icons-png.flaticon.com/512/9131/9131529.png";
+    const loginBtn = document.getElementById("loginBtn");
+    const userBox = document.getElementById("userBox");
+    const usernameDisplay = document.getElementById("usernameDisplay");
+
+    if (isLogged === "true" && user) {
+        loginBtn.style.display = "none";
+        userBox.style.display = "inline-block";
+        usernameDisplay.textContent = user.name;
     } else {
-      loginBtn.style.display = "inline-block";
-      userArea.style.display = "none";
-      logoutDropdown.style.display = "none"; // hide dropdown on logout
+        userBox.style.display = "none";
+        loginBtn.style.display = "inline-block";
     }
-  }
 
-  updateHeader(); // Initial check
+    userBox.addEventListener("click", function () {
+        const menu = document.getElementById("dropdownMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+    });
+});
 
-  // Toggle dropdown on click
-  userArea.addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (logoutDropdown.style.display === "block") {
-      logoutDropdown.style.display = "none";
-    } else {
-      logoutDropdown.style.display = "block";
-    }
-  });
-
-  // Logout
-  logoutDropdown.addEventListener("click", () => {
+function logoutUser() {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user");
-    alert("Logged out successfully!");
-    updateHeader(); // Update header immediately
-  });
-
-  // Hide dropdown if click outside
-  document.addEventListener("click", () => {
-    logoutDropdown.style.display = "none";
-  });
-};
+    location.reload();
+}
 </script>
-
 
 </body>
 </html>
-
-
 
 
 
